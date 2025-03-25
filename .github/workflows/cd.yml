@@ -1,0 +1,20 @@
+name: CD Pipeline
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.ebaluga1 }}/python-ci-cd-app .
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.dckr_pat_JkK3sWvUwvPxE5AFpvPVmJcHckU }}" | docker login -u "${{ secrets.ebaluga1 }}" --password-stdin
+
+      - name: Push Docker image
+        run: |
+          docker push ${{ secrets.ebaluga1 }}/python-ci-cd-app
