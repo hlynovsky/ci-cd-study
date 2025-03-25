@@ -10,10 +10,18 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: "3.10"  # Используйте точную версию (не "3.x")
+
+      - name: Create and activate venv
+        run: |
+          python -m venv venv
+          source venv/bin/activate  # Linux/Mac
+          # venv\Scripts\activate   # Windows (если используется windows-раннер)
 
       - name: Install dependencies
-        run: pip install flask pytest  # Только то, что действительно нужно
+        run: |
+          pip install --upgrade pip
+          pip install flask pytest  # Или используйте requirements.txt
 
       - name: Run tests
-        run: pytest  # Будет искать test_*.py автоматически
+        run: pytest
